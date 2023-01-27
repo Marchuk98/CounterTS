@@ -1,0 +1,10 @@
+.ButtonInc{
+    border-radius: 10px;
+    margin:10px;
+    border: none;
+    font-family:monospace;
+    font-size:18px;
+    font-weight:bold;
+    color: #2f2f36;
+    cursor: pointer;
+}
