@@ -4,7 +4,7 @@ import s from './SuperButton.module.css'
 type SuperButtonPropsType = {
     name:string
     callBack:() => void
-    disabled: boolean
+    disabled?: boolean
 }
 
 
