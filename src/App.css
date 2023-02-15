@@ -1,16 +1,9 @@
 .App {
+  display: flex;
   text-align: center;
   background-color:#2f2f36;
   padding:100px;
+  justify-content: center;
 }
 
-.AppButtonBlock{
-  position: absolute;
-  left: 46%;
-  top: 27%;
-  display: flex;
-  border: 2px solid #5ed5fa;
-  width: 154px;
-  border-radius: 10px;
-}
 

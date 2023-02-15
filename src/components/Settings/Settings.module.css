@@ -1,0 +1,51 @@
+.mainSettingsBlock{
+    position: relative;
+    border: 2px solid #5ed5fa;
+    width: 310px;
+    height: 243px;
+    border-radius: 10px;
+    /*background-color:  #5ed5fa;*/
+}
+
+.SettingsBlock{
+    border-radius: 10px;
+    border: 2px solid #5ed5fa;
+    color:#5ed5fa;
+    padding:20px 10px;
+    font-weight:bold;
+    width: 260px;
+    height: 114px;
+    margin: 13px auto;
+}
+
+.ButtonInc{
+    border-radius: 10px;
+    margin:10px;
+    border: none;
+    font-family:monospace;
+    font-size:18px;
+    font-weight:bold;
+    color: #2f2f36;
+    cursor: pointer;
+}
+
+.DisplayControlButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #5ed5fa;
+    border-radius: 10px;
+    margin: 0 13px;
+}
+
+.InputElement{
+    border: 2px solid #5ed5fa;
+    width: 100px;
+    height: 20px;
+}
+.nameElementText{
+    text-align: left;
+}
+.errorInput {
+    background-color: palevioletred;
+}
