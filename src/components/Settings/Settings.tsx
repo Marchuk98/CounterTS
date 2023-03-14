@@ -1,46 +1,56 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import s from './Settings.module.css'
 import SuperButton from "../Button/SuperButton";
 import Input from "../Input/Input";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "../../state/store";
+import {maxValueAC, SettingsStateType, startValueAC} from "../../state/settings-reducer";
 
 
-type SettingsPropsType = {
-    incrementCounter: number
-    maxValue: number
-    startValue: number
-    error:boolean
-    startSettingsValue:(value:number)=>void
-    maxSettingsValue:(value:number)=>void
-    setSettingsToStorage:()=> void
-}
+const Settings = () => {
 
-const Settings = (props: SettingsPropsType) => {
+        const settingsState = useSelector<AppRootStateType,SettingsStateType>(state => state.settings)
+        const dispatch = useDispatch()
 
-        const InputClassName = s.InputElement + ' ' + (props.error ? s.errorInput: "")
+    useEffect(() => {
+        let newStartValueStr = localStorage.getItem("startValue")
+        let newMaxValueStr = localStorage.getItem("maxValue")
+        if (newStartValueStr && newMaxValueStr) {
+            dispatch(startValueAC(JSON.parse(newStartValueStr)))
+            dispatch(maxValueAC(JSON.parse(newMaxValueStr)))
+        }
+    }, [])
+
+    const setSettingsToStorage = () => {
+        localStorage.setItem('startValue', JSON.stringify(settingsState.startValue))
+        localStorage.setItem('maxValue', JSON.stringify(settingsState.maxValue))
+    }
+
+    let maxValueError = (settingsState.maxValue <= 0 || settingsState.maxValue <= settingsState.startValue)
+    let startValueError = (settingsState.startValue < 0 || settingsState.startValue >= settingsState.maxValue)
 
     return (
         <div className={s.mainSettingsBlock}>
             <div className={s.SettingsBlock}>
                 <div className={s.nameElementText}>
                     <Input
-                        className={InputClassName}
                         title={"Start-Value"}
-                        value={props.startValue}
-                        callBack={props.startSettingsValue}/>
+                        value={settingsState.startValue}
+                        callBack={(value)=> {dispatch(startValueAC(value))}}/>
                 </div>
                 <div className={s.nameElementText}>
                     <Input
-                        className={InputClassName}
-                        value={props.maxValue}
+                        value={settingsState.maxValue}
                         title={"Max-Value"}
-                        callBack={props.maxSettingsValue}/>
+                        callBack={(value)=> {dispatch(maxValueAC(value))}}/>
                 </div>
             </div>
             <div className={s.DisplayControlButton}>
                 <SuperButton
                     name={'set'}
-                    callBack={props.setSettingsToStorage}
-                    disabled={props.error}/>
+                    callBack={setSettingsToStorage}
+                    disabled={maxValueError || startValueError}
+                />
             </div>
         </div>
     );
