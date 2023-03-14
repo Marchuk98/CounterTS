@@ -4,7 +4,6 @@ type InputPropsType = {
     title:string
     value:number
     callBack:(value:number)=> void
-    className:string
 }
 
 
@@ -16,7 +15,7 @@ const Input = (props:InputPropsType) => {
 
     return (
         <div>
-           <span>{props.title}</span> <input className={props.className} type={'number'} value={props.value} onChange={onChangeCallBack} />
+           <span>{props.title}</span> <input type={'number'} value={props.value} onChange={onChangeCallBack} />
         </div>
     );
 };

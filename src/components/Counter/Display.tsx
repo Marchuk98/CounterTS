@@ -1,33 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import d from './Display.module.css'
 import SuperButton from "../Button/SuperButton";
+import {AppRootStateType, store} from "../../state/store";
+import {useDispatch, useSelector} from "react-redux";
+import {CounterStateType, incrementCounterAC, resetCounterAC} from "../../state/counter-reducer";
+import {SettingsStateType} from "../../state/settings-reducer";
 
+const Display = () => {
 
-type DisplayPropsType = {
-    increment: number
-    maxValue:number
-    startValue:number
-    error:boolean
-    incrementCounter:()=> void
-    resetCounter:()=> void
+    const counterState = useSelector<AppRootStateType, CounterStateType>(state => store.getState().counter)
+    const settingsState = useSelector<AppRootStateType, SettingsStateType>(state => store.getState().settings)
+    const dispatch = useDispatch()
 
-}
-
-
-const Display = (props: DisplayPropsType) => {
-
+    useEffect(() => {
+        counterState.counterValue = settingsState.startValue
+    }, [])
 
     return (
         <div className={d.mainBlock}>
-            <div className={props.increment >= props.maxValue ? d.AttentionDisplayBlock:d.displayBlock} >{props.increment}</div>
+            <div className={counterState.counterValue >= settingsState.maxValue ? d.AttentionDisplayBlock:d.displayBlock} >{counterState.counterValue}</div>
 
             <div className={d.DisplayControlButton}>
             <SuperButton name={"inc"}
-                         callBack={props.incrementCounter}
-                         disabled={props.increment >= props.maxValue}/>
+                         callBack={()=> {dispatch(incrementCounterAC())}}
+                         disabled={counterState.counterValue >= settingsState.maxValue}/>
             <SuperButton name={"reset"}
-                         callBack={props.resetCounter}
-                         disabled={props.increment <= props.startValue}/>
+                         callBack={()=> {dispatch(resetCounterAC(settingsState.startValue))}}
+                         disabled={counterState.counterValue <= settingsState.startValue}/>
             </div>
         </div>
     );
